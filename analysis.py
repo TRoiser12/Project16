@@ -6,7 +6,6 @@ def function(v, a, b):
     return a*v**b
 
 s_m = 0.5777    #sphere mass in kg
-s_d = 0.05064   #sphere diameter in m
 
 dh = 0.2        #error in height in cm
 dm = 1e-4       #error in sphere mass in kg
@@ -27,8 +26,8 @@ popt, pcov = optimize.curve_fit(function, v, t)
 v_f = np.linspace(0.2, v[-1], 1000)
 t_f = function(v_f, popt[0], popt[1])
 
-plt.errorbar(v, t, yerr= dt, xerr = dv, linestyle="none", color = "b")
-plt.loglog(v_f, t_f, label = f"t1 = ({popt[0]:.1f}v ± {pcov[0][0]:.1f}) ^ ({popt[1]:.2f} ± {pcov[1][1]:.2f})", color = "b")
+plt.errorbar(v, t, yerr= dt, xerr = dv, linestyle="none", color = "b", marker = "o")
+plt.loglog(v_f, t_f, label = f"t1 = ({(popt[0]/1000000):.7f}v ± {pcov[0][0]/1000000:.7f}) ^ ({popt[1]:.4f} ± {pcov[1][1]:.4f})", color = "b")
 
 h_dat, t_dat = np.loadtxt('rawData_2.csv', skiprows = 1, unpack = True, delimiter = ',')
 
@@ -47,8 +46,8 @@ popt, pcov = optimize.curve_fit(function, v, t)
 v_f = np.linspace(0.1, v[-1], 1000)
 t_f = function(v_f, popt[0], popt[1])
 
-plt.errorbar(v, t, yerr= dt, xerr = dv, linestyle="", color = "r")
-plt.loglog(v_f, t_f, label = f"t2 = ({popt[0]:.1f}v ± {pcov[0][0]:.1f}) ^ ({popt[1]:.2f} ± {pcov[1][1]:.2f})", linestyle="--", color="r")
+plt.errorbar(v, t, yerr= dt, xerr = dv, linestyle="", color = "r", marker = "^")
+plt.loglog(v_f, t_f, label = f"t2 = ({(popt[0]/1000000):.7f}v ± {pcov[0][0]/1000000:.7f}) ^ ({popt[1]:.4f} ± {pcov[1][1]:.4f})", linestyle="--", color="r")
 plt.xlabel("Velocity (m/s)")
 plt.ylabel("Contact time (μs)")
 plt.legend()
